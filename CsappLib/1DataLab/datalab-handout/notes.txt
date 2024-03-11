@@ -1,0 +1,10 @@
+1 Mar
+!! can change number to logic;
+~x+1可以将逻辑值0，1转换为全0和全1；
+
+当x只有全0和全1两种取值，可以实现的表达式
+int conditional(int x,int y,int z){
+	x=!!x;
+	x=~x+1;
+	return (x&y)|(~x&z);
+}

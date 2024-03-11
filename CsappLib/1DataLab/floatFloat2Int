@@ -1,0 +1,26 @@
+int floatFloat2Int(unsigned uf) {
+	int bias=127;
+	int exp=(uf&0x7f800000)>>23;
+	int sign=uf&(1<<31);
+	int E=0;
+	int result=0;
+	unsigned mantissa=uf&0x007fffff;
+	if(exp==0xff)
+		return 0x80000000;
+	if(exp!=0&&exp!=0xff)
+		mantissa+=0x800000;
+	if(!(uf&0x7fffffff))
+		return 0;
+	exp=exp-bias;
+	if(exp<0)
+		return 0;
+	if(exp<=23)
+		return (mantissa>>(23-exp))|sign;
+	else{
+		E=exp-23;
+		result=mantissa<<E;
+		if((result/E)!=mantissa)
+			return 0x80000000;
+		return result|sign; 
+	}
+}
